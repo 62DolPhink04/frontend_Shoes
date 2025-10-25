@@ -209,7 +209,7 @@ const DashboardLayout = () => {
                 !open && "scale-0"
               }`}
             >
-              Study
+              Shoes
             </h1>
           </Link>
         </div>
