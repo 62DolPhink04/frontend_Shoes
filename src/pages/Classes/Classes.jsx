@@ -7,6 +7,7 @@ import useAxiosFetch from "../../hooks/useAxiosFetch";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useUser from "../../hooks/useUser";
 
+import { Helmet } from "react-helmet-async";
 const Classes = () => {
   const navigate = useNavigate();
   const [Classes, setClasses] = useState([]);
