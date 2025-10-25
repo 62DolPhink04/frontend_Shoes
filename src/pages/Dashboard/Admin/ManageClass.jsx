@@ -171,7 +171,7 @@ const ManageClass = () => {
                           <td className="whitespace-nowrap px-6 py-4">
                             <img
                               src={cls.image}
-                              alt={cls.name}
+                              alt="Shoes Product other"
                               className="h-[35px] w-[35px]"
                             />
                           </td>
