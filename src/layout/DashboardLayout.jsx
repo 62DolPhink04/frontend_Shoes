@@ -197,7 +197,7 @@ const DashboardLayout = () => {
           <img
             onClick={() => setOpen(!open)}
             src="/yoga-logo.png"
-            alt={cls.name}
+            alt="Logo"
             className={`cursor-pointer h-[40px] duration-500 ${
               open && "rotate-[360deg]"
             }`}
