@@ -170,7 +170,7 @@ const Classes = () => {
               />
               <img
                 src={cls.image}
-                alt=""
+                alt={cls.name}
                 className="object-cover w-full h-full"
               />
               <Transition
