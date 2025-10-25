@@ -172,7 +172,7 @@ const Classes = () => {
               />
               <img
                 src={cls.image}
-                alt={cls.name}
+                alt="Shoes Image"
                 className="object-cover w-full h-full"
               />
               <Transition
