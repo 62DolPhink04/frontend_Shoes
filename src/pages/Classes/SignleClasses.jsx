@@ -451,7 +451,7 @@ const SignleClasses = () => {
                             <div className="h-20 w-20 rounded">
                               <img
                                 src={bannerImg1}
-                                alt={cls.name}
+                                alt="Banner Image"
                                 className="w-full h-full object-cover rounded"
                               />
                             </div>
@@ -488,7 +488,7 @@ const SignleClasses = () => {
                             <div className="h-20 w-20 rounded">
                               <img
                                 src={bannerImg1}
-                                alt={cls.name}
+                                alt="Banner Image"
                                 className="w-full h-full object-cover rounded"
                               />
                             </div>
@@ -507,7 +507,7 @@ const SignleClasses = () => {
                             <div className="h-20 w-20 rounded">
                               <img
                                 src={bannerImg1}
-                                alt={cls.name}
+                                alt="Banner Image"
                                 className="w-full h-full object-cover rounded"
                               />
                             </div>
