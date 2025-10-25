@@ -134,7 +134,7 @@ const SelectedClass = () => {
                               <div className="flex items-center">
                                 <img
                                   src={item.image}
-                                  alt=""
+                                  alt={item.name}
                                   className="h-16 w-16 mr-4"
                                 />
                                 <span>{item.name}</span>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import useUser from "../../../../hooks/useUser";
 
@@ -30,7 +30,7 @@ const EnrolledClasses = () => {
         {data.map((item, index) => (
           <img
             src={item.classes.image}
-            alt=""
+            alt={item.classes.name}
             className="h-1/2 w-full sm:h-full sm-w-1/2 object-cover"
           />
         ))}

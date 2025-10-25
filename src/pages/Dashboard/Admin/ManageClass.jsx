@@ -1,5 +1,5 @@
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -171,7 +171,7 @@ const ManageClass = () => {
                           <td className="whitespace-nowrap px-6 py-4">
                             <img
                               src={cls.image}
-                              alt=""
+                              alt={cls.name}
                               className="h-[35px] w-[35px]"
                             />
                           </td>

@@ -1,5 +1,5 @@
 import Pagination from "@mui/material/Pagination";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GrUpdate } from "react-icons/gr";
 import { MdDeleteSweep } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -121,7 +121,7 @@ const ManageUser = () => {
                         <td className="whitespace-nowrap px-6 py-4 font-medium">
                           <img
                             src={user.photoUrl}
-                            alt=""
+                            alt={user.name || "User Avatar"}
                             className="h-[35px] w-[35px] "
                           />
                         </td>

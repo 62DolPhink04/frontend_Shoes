@@ -1,4 +1,3 @@
-import React from "react";
 import bgImg from "../../../assets/dashboard/jaconda-14.png";
 const InstructorCP = () => {
   return (
@@ -7,7 +6,7 @@ const InstructorCP = () => {
         <h1 className="text-2xl font-bold text-secondary">
           Instructor Dashboard
         </h1>
-        <img src={bgImg} alt="" className="md:w-1/2" />
+        <img src={bgImg} alt="insstructor" className="md:w-1/2" />
       </div>
     </div>
   );

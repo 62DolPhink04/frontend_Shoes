@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useUser from "../../../hooks/useUser";
@@ -48,7 +48,7 @@ const PendingClasses = () => {
                   <div>
                     <img
                       src={cls.image}
-                      alt=""
+                      alt={cls.name}
                       className="max-h-[200px] max-w-[300px]"
                     />
                   </div>

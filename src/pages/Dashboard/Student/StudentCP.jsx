@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import WelcomeImg from "../../../assets/dashboard/urban-welcome.svg";
 import useUser from "../../../hooks/useUser";
@@ -13,7 +12,7 @@ const StudentCP = () => {
             <img
               onContextMenu={(e) => e.preventDefault()}
               src={WelcomeImg}
-              alt=""
+              alt="Welcome Image"
               className="h-[200px]"
               placeholder="blur"
             />
