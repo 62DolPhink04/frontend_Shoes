@@ -1,4 +1,3 @@
-import React from "react";
 import { HashLoader } from "react-spinners";
 import useUser from "../../hooks/useUser";
 import DashboardNavigate from "../../route/DashboardNavigate";

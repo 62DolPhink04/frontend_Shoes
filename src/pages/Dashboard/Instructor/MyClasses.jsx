@@ -45,7 +45,7 @@ const MyClasses = () => {
                   <div>
                     <img
                       src={cls.image}
-                      alt={cls.name}
+                      alt="Shoes Product"
                       className="max-h-[200px] max-w-[300px]"
                     />
                   </div>

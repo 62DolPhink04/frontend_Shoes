@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -83,7 +83,7 @@ const ApprovedClasses = () => {
                 <div>
                   <img
                     src={cls.image}
-                    alt={cls.name}
+                    alt="Shoes Product Approved"
                     className="max-h-[200px] max-w-[300px]"
                   />
                 </div>
