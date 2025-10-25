@@ -130,7 +130,7 @@ const SignleClasses = () => {
                       <img
                         // course.img
                         src={course.image}
-                        alt={cls.name}
+                        alt={course.name}
                         // object-fut
                         className="rounded-md object-fill w-full h-full block"
                       />
@@ -145,7 +145,7 @@ const SignleClasses = () => {
                               src={
                                 "https://t4.ftcdn.net/jpg/02/27/45/09/360_F_227450952_KQCMShHPOPebUXklULsKsROk5AvN6H1H.jpg  "
                               }
-                              alt={cls.name}
+                              alt={course.name}
                               className="object-cover w-full h-full rounded"
                             />
                           </div>
@@ -239,7 +239,7 @@ const SignleClasses = () => {
                                     <div className="flex-none self-start mt-1.5">
                                       <img
                                         src="/correct-mark.png"
-                                        alt={cls.name}
+                                        alt={course.name}
                                         className="w-5 h-5"
                                       />
                                     </div>
@@ -257,7 +257,7 @@ const SignleClasses = () => {
                               <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mt-5">
                                 <div className=" bg-white rounded px-5 py-[18px] flex shadow-box2 space-x-[10px] items-center">
                                   <span className="flex-none">
-                                    <img src="/logo.png" alt={cls.name} />
+                                    <img src="/logo.png" alt="Logo" />
                                   </span>
                                   <span className="flex-1 text-black">
                                     Computer/Mobile
@@ -265,7 +265,7 @@ const SignleClasses = () => {
                                 </div>
                                 <div className="bg-white rounded px-5 py-[18px] flex shadow-box2 space-x-[10px] items-center">
                                   <div className="flex-none">
-                                    <img src="/logo.png" alt={cls.name} />
+                                    <img src="/logo.png" alt="Logo" />
                                   </div>
                                   <span className="flex-1 text-black">
                                     Paper &amp; Pencil
@@ -273,7 +273,7 @@ const SignleClasses = () => {
                                 </div>
                                 <div className="bg-white rounded px-5 py-[18px] flex shadow-box2 space-x-[10px] items-center">
                                   <div className="flex-none">
-                                    <img src="/logo.png" alt={cls.name} />
+                                    <img src="/logo.png" alt="Logo" />
                                   </div>
                                   <span className="flex-1 text-black">
                                     Internet Connect
@@ -422,22 +422,22 @@ const SignleClasses = () => {
                         <li className="text-black font-semibold">Share On:</li>
                         <li>
                           <a href="#" className="flex h-10 w-10">
-                            <img src="/logo.png" alt={cls.name} />
+                            <img src="/logo.png" alt="Logo" />
                           </a>
                         </li>
                         <li>
                           <a href="#" className="flex h-10 w-10">
-                            <img src="/logo.png" alt={cls.name} />
+                            <img src="/logo.png" alt="Logo" />
                           </a>
                         </li>
                         <li>
                           <a href="#" className="flex h-10 w-10">
-                            <img src="/logo.png" alt={cls.name} />
+                            <img src="/logo.png" alt="Logo" />
                           </a>
                         </li>
                         <li>
                           <a href="#" className="flex h-10 w-10">
-                            <img src="/logo.png" alt={cls.name} />
+                            <img src="/logo.png" alt="Logo" />
                           </a>
                         </li>
                       </ul>
