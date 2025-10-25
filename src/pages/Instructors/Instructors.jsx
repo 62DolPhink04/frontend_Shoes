@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import img from "../../assets/home/girl.jpg";
 import useAxiosFetch from "../../hooks/useAxiosFetch";
 
@@ -37,6 +38,13 @@ const Instructors = () => {
 
   return (
     <div className="md:w-[80%] mx-auto my-36">
+      <Helmet>
+        <title>Đội Ngũ Bán Hàng (Saler) | Nike</title>
+        <meta
+          name="description"
+          content="Gặp gỡ đội ngũ bán hàng chuyên nghiệp và tận tâm tại Tên Shop Của Bạn."
+        />
+      </Helmet>
       <h1 className="text-5xl font-bold text-center">
         Our <span className="text-secondary">Best</span> Instructors
       </h1>

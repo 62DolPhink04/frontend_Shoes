@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import bannerImg1 from "../../assets/home/banner-1.jpg";
 
@@ -85,6 +86,28 @@ const SignleClasses = () => {
 
   return (
     <>
+      <Helmet>
+        <title>{course?.name} | Nike</title>
+        <meta
+          name="description"
+          content={
+            course?.description
+              ? course.description.replace(/<[^>]*>?/gm, "").substring(0, 155)
+              : `Mua ngay ${course?.name} tại Tên Shop Của Bạn.`
+          }
+        />
+
+        <meta property="og:title" content={`${course?.name} | Nike`} />
+        <meta property="og:image" content={course?.image} />
+        <meta
+          property="og:description"
+          content={
+            course?.description
+              ? course.description.replace(/<[^>]*>?/gm, "").substring(0, 155)
+              : `Mua ngay ${course?.name} tại Tên Shop Của Bạn.`
+          }
+        />
+      </Helmet>
       <div>
         <div
           className="font-gilroy font-medium text-gray dark:text-white text-lg leading-[27%] w-[90%] mx-auto"

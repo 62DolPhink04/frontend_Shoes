@@ -40,7 +40,7 @@ const Gallary = () => {
         <div className="mb-4 md:mb-0">
           <img
             src={siteSettings.imgGallary3}
-            alt=""
+            alt="Bộ sưu tập giày 1"
             className="md:h-[720px] w-full mx-auto rounded-sm"
           />
         </div>
@@ -48,28 +48,28 @@ const Gallary = () => {
           <div>
             <img
               src={siteSettings.imgGallary1}
-              alt=""
+              alt="Bộ sưu tập giày 2"
               className="md:h-[350px] rounded-sm"
             />
           </div>
           <div>
             <img
               src={siteSettings.imgGallary2}
-              alt=""
+              alt="Bộ sưu tập giày 3"
               className="md:h-[350px] rounded-sm"
             />
           </div>
           <div>
             <img
               src={siteSettings.imgGallary4}
-              alt=""
+              alt="Bộ sưu tập giày 4"
               className="md:h-[350px] rounded-sm"
             />
           </div>
           <div>
             <img
               src={siteSettings.imgGallary5}
-              alt=""
+              alt="Bộ sưu tập giày 5"
               className="md:h-[350px] rounded-sm"
             />
           </div>

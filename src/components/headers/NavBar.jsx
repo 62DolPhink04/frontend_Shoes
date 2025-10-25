@@ -172,6 +172,7 @@ const NavBar = () => {
                   <img
                     src={siteSettings?.logoImg || "/yoga-logo.png"}
                     className="w-8 h-8"
+                    alt={siteSettings?.nameWebsite || "Nike"}
                   />
                 </h1>
                 <p className="font-bold text-[13px] tracking-[8px]">
@@ -279,6 +280,7 @@ const NavBar = () => {
                       <img
                         src={currentUser?.photoUrl}
                         className="h-[40px] rounded-full w-[40px]"
+                        alt={currentUser?.name || "User Avatar"}
                       ></img>
                     </li>
                   )}

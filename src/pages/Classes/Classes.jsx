@@ -135,6 +135,13 @@ const Classes = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Tất Cả Giày | Nike</title>
+        <meta
+          name="description"
+          content="Xem tất cả các mẫu giày thể thao nam, nữ chính hãng. Cập nhật mẫu mới nhất 2025."
+        />
+      </Helmet>
       <div className="mt-20 pt-3">
         <h1 className="text-4xl font-bold text-center text-secondary">Shoes</h1>
       </div>

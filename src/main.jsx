@@ -3,6 +3,7 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "react-hot-toast"; // Thêm dòng này
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -14,12 +15,14 @@ Aos.init();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <Toaster position="top-right" reverseOrder={false} />{" "}
-        {/* Thêm vào đây */}
-      </QueryClientProvider>
-    </AuthProvider>
+    <HelmetProvider>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <Toaster position="top-right" reverseOrder={false} />{" "}
+          {/* Thêm vào đây */}
+        </QueryClientProvider>
+      </AuthProvider>
+    </HelmetProvider>
   </React.StrictMode>
 );
