@@ -96,7 +96,7 @@ const MainLayout = () => {
             <div className="mt-2 w-full h-40 rounded-lg overflow-hidden border border-gray-300 shadow-sm">
               <iframe
                 title="Google Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.503021091798!2d106.70098397480505!3d10.772214059323034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f414b26e8b3%3A0xd808fb1e1a34ad2e!2zQ8O0bmcgVHkgQ-G7lSBQaOG6p24gVGhvw6Bu!5e0!3m2!1svi!2s!4v1685706756729!5m2!1svi!2s"
+                src="https://maps.app.goo.gl/1Qc1GQEKfGQ9YWCB7"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
