@@ -12,7 +12,7 @@ const Home = () => {
         <title>Nike - Giày Thể Thao Chính Hãng</title>
         <meta
           name="description"
-          content="Shop chuyên cung cấp giày Nike, Adidas, Puma chính hãng. Giao hàng toàn quốc, bảo hành 1 đổi 1. Cam kết hàng thật 100%, giá tốt nhất cho tín đồ thể thao."
+          content="Shop bán giày thể thao Nike, Adidas, Puma chính hãng. Mua giày online dễ dàng, giao hàng toàn quốc, bảo hành 1 đổi 1. Cam kết hàng thật 100%, giá tốt nhất hiện nay."
         />
 
         <meta property="og:title" content="Nike - Giày Thể Thao Chính Hãng" />
