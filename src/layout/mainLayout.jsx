@@ -44,13 +44,19 @@ const mainLayout = () => {
           <div>
             <h3 className="text-lg font-bold">Support</h3>
             <ul className="mt-2 space-y-1">
-              <li>
+              <li className="text-secondary">
                 <a href="https://www.facebook.com/">FaceBook</a>
               </li>
-              <li>FAQ</li>
-              <li>Site feedback</li>
-              <li>Expert Help</li>
-              <li>Resources and Guides</li>
+              <li className="text-secondary">
+                <a href="https://zalo.me/pc"></a>
+              </li>
+              <li className="text-secondary">
+                <a href="https://www.tiktok.com">Tiktok</a>
+              </li>
+              <li className="text-secondary">
+                <a href="https://www.instagram.com/">Instagram</a>
+              </li>
+              <li>Feeback</li>
             </ul>
           </div>
           <div>
