@@ -9,7 +9,9 @@ const Home = () => {
   return (
     <section>
       <Helmet>
-        <title>Nike - Giày Thể Thao Chính Hãng</title>
+        <title>
+          Mua Giày Nike, Adidas, Puma Chính Hãng - Giao Hàng Toàn Quốc
+        </title>
         <meta
           name="description"
           content="Shop bán giày thể thao Nike, Adidas, Puma chính hãng. Mua giày online dễ dàng, giao hàng toàn quốc, bảo hành 1 đổi 1. Cam kết hàng thật 100%, giá tốt nhất hiện nay."
