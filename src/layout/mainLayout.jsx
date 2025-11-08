@@ -5,7 +5,7 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import NavBar from "../components/headers/NavBar";
 import ChatWidget from "../pages/ChatWidget";
 
