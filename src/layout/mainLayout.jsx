@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import {
   FaFacebook,
   FaInstagram,
@@ -12,6 +13,12 @@ import ChatWidget from "../pages/ChatWidget";
 const MainLayout = () => {
   return (
     <main className="dark:bg-black overflow-hidden">
+      <Helmet>
+        <meta
+          name="google-site-verification"
+          content="oO9yxKKUmMk8b8rDoCbJE9PovH-KWqcTAYsZyfznMTo"
+        />
+      </Helmet>
       <NavBar />
       <Outlet />
       <ChatWidget />
