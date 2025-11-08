@@ -35,6 +35,7 @@ import StudentCP from "../pages/Dashboard/Student/StudentCP";
 import Home from "../pages/Home/Home";
 import Instructors from "../pages/Instructors/Instructors";
 import KidsShoes from "../pages/Shoes/KidsShoes";
+import MenShoes from "../pages/Shoes/MenShoes";
 import WomenShoes from "../pages/Shoes/WomenShoes";
 import Login from "../user/login";
 import Register from "../user/register";
