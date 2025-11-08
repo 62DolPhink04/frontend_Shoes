@@ -15,14 +15,18 @@ import { MdBookOnline } from "react-icons/md";
 // import {Falanguage , FalevelUpAlt , FaUser , FaUsers} from "react-icons/fa" ;
 import { FaLanguage, FaLevelUpAlt } from "react-icons/fa";
 
+// === 1. IMPORT BREADCRUMBS ===
+import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
+
 const SignleClasses = () => {
   const axiosSecure = useAxiosSecure();
-  const course = useLoaderData();
+  const course = useLoaderData(); // 2. LẤY DATA SẢN PHẨM
   const { currentUser } = useUser();
   const role = currentUser?.role;
   const [enrolledClasses, setEnrolledClasses] = useState([]);
   const axiosFetch = useAxiosFetch();
 
+  // ... (code handleSelect và showWarningToast của bạn giữ nguyên) ...
   // message
   const showWarningToast = (message) => {
     toast(message, {
@@ -84,9 +88,18 @@ const SignleClasses = () => {
     }
   };
 
+  // === 3. ĐỊNH NGHĨA CRUMBS DỰA TRÊN DATA SẢN PHẨM ===
+  // (Lý tưởng nhất là 'course.categoryPath' lấy từ API, nhưng ta làm dự phòng)
+  const crumbs = course.categoryPath || [
+    { name: "Trang chủ", path: "/" },
+    { name: "Tất cả Giày", path: "/classes" },
+    { name: course.name, path: null }, // Trang hiện tại
+  ];
+
   return (
     <>
       <Helmet>
+        {/* ... (code Helmet của bạn giữ nguyên) ... */}
         <title>{course?.name} | Nike</title>
         <meta
           name="description"
@@ -114,17 +127,25 @@ const SignleClasses = () => {
           data-new-gr-c-s-check-loaded="14.1157.0"
           data-gr-ext-installed=""
         >
-          {/* breadcrumb or header  */}
-          <div className="breadcrumbs bg-primary py-20 mt-20 section-padding bg-cover bg-center bg-no-repeat">
+          {/* === 4. THÊM BREADCRUMBS VÀO ĐÂY === */}
+          <div className="mt-20 pt-3">
+            <Breadcrumbs crumbs={crumbs} />
+          </div>
+
+          {/* XÓA BỎ HEADER CŨ */}
+          {/* <div className="breadcrumbs bg-primary py-20 mt-20 section-padding bg-cover bg-center bg-no-repeat">
             <div className="container text-center">
               <h2>Shoes Detailts</h2>
             </div>
-          </div>
+          </div> */}
+
           <div className="nav-tab-wrapper tabs section-padding mt-8">
             <div className="container">
               <div className="grid grid-cols-12 md:gap-[30px]">
                 {/* Left side  */}
                 <div className="lg:col-span-8 col-span-12">
+                  {/* ... (Toàn bộ code còn lại của trang giữ nguyên) ... */}
+
                   <div className="single-course-detailts">
                     <div className="xl:h-[470px] h-[350px] mb-10 course-main-thumb">
                       <img
@@ -314,6 +335,7 @@ const SignleClasses = () => {
                 </div>
                 {/*right side*/}
                 <div className="lg:col-span-4 col-span-12 mt-8 md:mt-0">
+                  {/* ... (Toàn bộ code sidebar phải giữ nguyên) ... */}
                   <div className="sidebarWrapper space-y-[30px]">
                     <div className="wdiget custom-text space-y-5">
                       <a
