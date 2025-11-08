@@ -72,6 +72,36 @@ export const router = createBrowserRouter([
           return response.json();
         },
       },
+
+      // === Các route mới cho Blog đã được thêm vào ===
+      {
+        path: "blog",
+        element: <Blog />,
+      },
+      {
+        path: "blog/:id",
+        element: <BlogDetail />,
+      },
+      {
+        path: "blog/create",
+        element: <CreatePost />,
+      },
+      // ===========================================
+
+      // === Các route mới cho Shoes (dropdown) đã được thêm vào ===
+      {
+        path: "shoes/men",
+        element: <MenShoes />,
+      },
+      {
+        path: "shoes/women",
+        element: <WomenShoes />,
+      },
+      {
+        path: "shoes/kids",
+        element: <KidsShoes />,
+      },
+      // ========================================================
     ],
   },
   {
