@@ -7,7 +7,7 @@ import { FaBars } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useUser from "../../hooks/useUser";
-
+import { AuthContext } from "../../providers/AuthProvider";
 const NavLinks = [
   { name: "Home", router: "/" },
   {
