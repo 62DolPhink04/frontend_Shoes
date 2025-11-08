@@ -21,7 +21,7 @@ const MainLayout = () => {
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* --- Cột 1 --- */}
           <div>
-            <h3 className="font-semibold text-black mb-4">Hỗ Trợ</h3>
+            <h3 className="font-bold text-black mb-4">Hỗ Trợ</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/contact" className="hover:text-secondary">
@@ -61,7 +61,7 @@ const MainLayout = () => {
 
           {/* --- Cột 3 --- */}
           <div>
-            <h3 className="font-semibold text-black mb-4">Sản Phẩm</h3>
+            <h3 className=" text-black font-bold mb-4">Sản Phẩm</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/shoes/men" className="hover:text-secondary">
