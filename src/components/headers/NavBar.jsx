@@ -2,12 +2,12 @@ import { Switch } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useUser from "../../hooks/useUser";
-import { AuthContext } from "../../providers/AuthProvider";
+// import { AuthContext } from "../../providers/AuthProvider";
 const NavLinks = [
   { name: "Home", router: "/" },
   {
@@ -46,7 +46,7 @@ const NavBar = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [navBg, setNavBg] = useState("bg-[#15151580]");
-  const { logOut, user } = useContext(AuthContext); // Không gọi trong điều kiện
+  // const { logOut, user } = useContext(AuthContext); // Không gọi trong điều kiện
   const { currentUser } = useUser(); // Không gọi trong điều kiện
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
