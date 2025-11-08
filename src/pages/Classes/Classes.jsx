@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+// 1. IMPORT ĐÚNG CHỖ
+import Breadcrumbs from "../../components/Breadcrumbs/Breadcrumbs";
 import useAxiosFetch from "../../hooks/useAxiosFetch";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useUser from "../../hooks/useUser";
@@ -18,34 +20,23 @@ const Classes = () => {
   const axiosFetch = useAxiosFetch();
   const axiosSecure = useAxiosSecure();
 
-  const [siteSettings, setSiteSettings] = useState(null); // Để lưu trữ dữ liệu từ API
-  const [loading, setLoading] = useState(true); // Để kiểm soát trạng thái loading
+  const [siteSettings, setSiteSettings] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Lấy dữ liệu từ API khi component được render lần đầu tiên
     axios
       .get("https://backend-shoes-79qb.onrender.com/site-settings")
       .then((response) => {
-        setSiteSettings(response.data); // Cập nhật dữ liệu vào state
-        setLoading(false); // Thay đổi trạng thái loading sau khi có dữ liệu
+        setSiteSettings(response.data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Có lỗi khi lấy dữ liệu:", error);
-        setLoading(false); // Dù có lỗi cũng phải set loading là false
+        setLoading(false);
       });
   }, []); // []
 
-  // if (loading) {
-  //   return <div>Đang tải dữ liệu...</div>;
-  // }
-
-  // if (!siteSettings) {
-  //   return <div>Lỗi khi lấy dữ liệu.</div>;
-  // }
-
-  // const { user } = useContext(AuthProvider);
-  // console.log(user);
-  // message
   const showWarningToast = (message) => {
     toast(message, {
       icon: "⚠️",
@@ -67,10 +58,10 @@ const Classes = () => {
       .then((res) => setClasses(res.data))
       .catch((err) => console.log(err));
   }, []);
-  // console.log(Classes);
 
   // handle add to cart
   const handleSelect = async (id) => {
+    // ... (Toàn bộ code handleSelect của bạn giữ nguyên)
     if (!currentUser) {
       showWarningToast("Please Login First");
       navigate("/login"); // Chuyển hướng sang trang login
@@ -134,9 +125,17 @@ const Classes = () => {
       toast.error("An error occurred while processing your request.");
     }
   };
+
+  // 2. ĐỊNH NGHĨA CRUMBS (ĐÚNG CHỖ)
+  const crumbs = [
+    { name: "Trang chủ", path: "/" },
+    { name: "Tất cả Giày", path: null }, // Trang hiện tại, không cần link
+  ];
+
   return (
     <div>
       <Helmet>
+        {/* 3. HELMET CHỈ CHỨA TITLE VÀ META */}
         <title>
           Tất Cả Giày Thể Thao Nam Nữ Chính Hãng | Nike Store Việt Nam
         </title>
@@ -145,9 +144,17 @@ const Classes = () => {
           content="Khám phá tất cả các mẫu giày thể thao Nike chính hãng dành cho nam và nữ. Cập nhật các bộ sưu tập mới nhất 2025, miễn phí vận chuyển, bảo hành 1 đổi 1."
         />
       </Helmet>
+
+      {/* 4. ĐẶT BREADCRUMBS VÀ H1 RA BÊN NGOÀI */}
       <div className="mt-20 pt-3">
-        <h1 className="text-4xl font-bold text-center text-secondary">Shoes</h1>
+        <Breadcrumbs crumbs={crumbs} />
+        <h1 className="text-4xl font-bold text-center text-secondary mt-4">
+          {" "}
+          {/* Thêm mt-4 cho đẹp */}
+          Shoes
+        </h1>
       </div>
+
       <div className="w-[40%] text-center mx-auto my-4">
         <p className="text-gray-500">
           {siteSettings?.titlePopularClasses || "Wellcome to back Classes"}{" "}
