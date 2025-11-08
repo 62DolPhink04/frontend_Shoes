@@ -21,15 +21,28 @@ const MainLayout = () => {
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
           {/* --- Cột 1 --- */}
           <div>
-            <h3 className="text-lg font-bold">Plans</h3>
-            <ul className="mt-2 space-y-1">
-              <li>Study help</li>
-              <li>Test prep</li>
-              <li>College credit</li>
-              <li>Teacher resources</li>
-              <li>Working Scholars®</li>
-              <li>School group plans</li>
-              <li>Online tutoring</li>
+            <h3 className="font-semibold text-white mb-4">Hỗ Trợ</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/contact" className="hover:text-secondary">
+                  Liên hệ
+                </Link>
+              </li>
+              <li>
+                <Link to="/faq" className="hover:text-secondary">
+                  Câu hỏi (FAQ)
+                </Link>
+              </li>
+              <li>
+                <Link to="/policy" className="hover:text-secondary">
+                  Chính sách đổi trả
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="hover:text-secondary">
+                  Về chúng tôi
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -48,45 +61,28 @@ const MainLayout = () => {
 
           {/* --- Cột 3 --- */}
           <div>
-            <h3 className="text-lg font-bold">Support</h3>
-            <ul className="mt-2 space-y-1">
+            <h3 className="font-semibold text-white mb-4">Sản Phẩm</h3>
+            <ul className="space-y-2">
               <li>
-                <a
-                  href="https://www.facebook.com/"
-                  className="text-blue-500 hover:underline"
-                  target="_blank"
-                >
-                  Facebook
-                </a>
+                <Link to="/shoes/men" className="hover:text-secondary">
+                  Giày Nam
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://zalo.me/pc"
-                  className="text-blue-500 hover:underline"
-                  target="_blank"
-                >
-                  Zalo
-                </a>
+                <Link to="/shoes/women" className="hover:text-secondary">
+                  Giày Nữ
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://www.tiktok.com"
-                  className="text-blue-500 hover:underline"
-                  target="_blank"
-                >
-                  Tiktok
-                </a>
+                <Link to="/shoes/kids" className="hover:text-secondary">
+                  Giày Trẻ Em
+                </Link>
               </li>
               <li>
-                <a
-                  href="https://www.instagram.com/"
-                  className="text-blue-500 hover:underline"
-                  target="_blank"
-                >
-                  Instagram
-                </a>
+                <Link to="/classes" className="hover:text-secondary">
+                  Tất cả
+                </Link>
               </li>
-              <li>Feedback</li>
             </ul>
           </div>
 

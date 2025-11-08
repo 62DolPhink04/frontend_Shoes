@@ -40,6 +40,11 @@ import WomenShoes from "../pages/Shoes/WomenShoes";
 import Login from "../user/login";
 import Register from "../user/register";
 
+import About from "../pages/Info/About";
+import Contact from "../pages/Info/Contact";
+import FAQ from "../pages/Info/FAQ";
+import Policy from "../pages/Info/Policy";
+
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -107,9 +112,27 @@ export const router = createBrowserRouter([
         path: "shoes/kids",
         element: <KidsShoes />,
       },
+
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+      {
+        path: "faq",
+        element: <FAQ />,
+      },
+      {
+        path: "policy",
+        element: <Policy />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
       // ========================================================
     ],
   },
+
   {
     path: "/dashboard",
     element: <DashboardLayout />,
