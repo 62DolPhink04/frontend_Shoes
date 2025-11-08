@@ -2,12 +2,14 @@ import { Switch } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { motion } from "framer-motion";
-import { useContext, useEffect, useState } from "react";
+// 'useContext' không còn cần thiết nữa, nên tôi đã xóa nó khỏi 'react'
+import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import useUser from "../../hooks/useUser";
-import { AuthContext } from "../../ultilities/providers/AuthProvider";
+// === DÒNG IMPORT ĐÃ SỬA ===
+import { useAuth } from "../../ultilities/providers/AuthProvider"; // Đổi từ AuthContext sang useAuth
 
 const NavLinks = [
   { name: "Home", router: "/" },
@@ -30,8 +32,8 @@ const theme = createTheme({
 const NavBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [siteSettings, setSiteSettings] = useState(null); // Để lưu trữ dữ liệu từ API
-  const [loading, setLoading] = useState(true); // Để kiểm soát trạng thái loading
+  const [siteSettings, setSiteSettings] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isHome, setIsHome] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
@@ -39,14 +41,16 @@ const NavBar = () => {
   const [isFixed, setIsFixed] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [navBg, setNavBg] = useState("bg-[#15151580]");
-  const { logOut, user } = useContext(AuthContext); // Không gọi trong điều kiện
-  const { currentUser } = useUser(); // Không gọi trong điều kiện
+
+  // === DÒNG CODE ĐÃ SỬA ===
+  const { logOut, user } = useAuth(); // Đổi từ useContext(AuthContext) sang useAuth()
+
+  const { currentUser } = useUser();
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   // set title
-
   useEffect(() => {
     // Lấy dữ liệu từ API khi component được render lần đầu tiên
     axios
@@ -62,13 +66,7 @@ const NavBar = () => {
   }, []); // []
   console.log(siteSettings);
 
-  // if (loading) {
-  //   return <div>Đang tải dữ liệu...</div>;
-  // }
-
-  // if (!siteSettings) {
-  //   return <div>Lỗi khi lấy dữ liệu.</div>;
-  // }
+  // ... (Tất cả code còn lại giữ nguyên) ...
 
   useEffect(() => {
     const dartClass = "dark";
