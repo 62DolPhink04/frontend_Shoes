@@ -7,6 +7,9 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import AddClass from "../pages/Dashboard/Instructor/AddClass";
 import InstructorCP from "../pages/Dashboard/Instructor/InstructorCP";
 
+import Blog from "../pages/Blog/Blog";
+import BlogDetail from "../pages/Blog/BlogDetail";
+import CreatePost from "../pages/Blog/CreatePost";
 import AdminCP from "../pages/Dashboard/Admin/AdminCP";
 import CreateAccount from "../pages/Dashboard/Admin/CreateAccount";
 import ManageApplications from "../pages/Dashboard/Admin/ManageApplications";
@@ -31,6 +34,8 @@ import SelectedClass from "../pages/Dashboard/Student/SelectedClass";
 import StudentCP from "../pages/Dashboard/Student/StudentCP";
 import Home from "../pages/Home/Home";
 import Instructors from "../pages/Instructors/Instructors";
+import KidsShoes from "../pages/Shoes/KidsShoes";
+import WomenShoes from "../pages/Shoes/WomenShoes";
 import Login from "../user/login";
 import Register from "../user/register";
 
