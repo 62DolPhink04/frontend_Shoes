@@ -1,320 +1,241 @@
-import { Switch } from "@mui/material";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import axios from "axios";
-import { motion } from "framer-motion";
-import { useContext, useEffect, useState } from "react";
-import { FaBars } from "react-icons/fa";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import useUser from "../../hooks/useUser";
-import { AuthContext } from "../../ultilities/providers/AuthProvider";
+import { createBrowserRouter } from "react-router-dom";
+import DashboardLayout from "../layout/DashboardLayout";
+import MainLayout from "../layout/mainLayout";
+import Classes from "../pages/Classes/Classes";
+import SignleClasses from "../pages/Classes/SignleClasses";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import AddClass from "../pages/Dashboard/Instructor/AddClass";
+import InstructorCP from "../pages/Dashboard/Instructor/InstructorCP";
 
-const NavLinks = [
-  { name: "Home", router: "/" },
-  { name: "Shoes", router: "/classes" },
-  { name: "Saler", router: "/instructors" },
-];
+import AdminCP from "../pages/Dashboard/Admin/AdminCP";
+import CreateAccount from "../pages/Dashboard/Admin/CreateAccount";
+import ManageApplications from "../pages/Dashboard/Admin/ManageApplications";
+import ManageClass from "../pages/Dashboard/Admin/ManageClass";
+import ManageUser from "../pages/Dashboard/Admin/ManageUser";
+import SeoSetting from "../pages/Dashboard/Admin/SeoSetting";
+import UpdateAccount from "../pages/Dashboard/Admin/UpdateAccount";
+import ChangePass from "../pages/Dashboard/Dashboard_shared/ChangePass";
+import ProFile from "../pages/Dashboard/Dashboard_shared/Profile";
+import UpdateProfile from "../pages/Dashboard/Dashboard_shared/UpdateProfile";
+import MyApproved from "../pages/Dashboard/Instructor/MyApproved";
+import MyClasses from "../pages/Dashboard/Instructor/MyClasses";
+import PendingCourse from "../pages/Dashboard/Instructor/PendingCourse";
+import RejectedCourse from "../pages/Dashboard/Instructor/RejectedCourse";
+import UpdateClass from "../pages/Dashboard/Instructor/UpdateClass";
+import ApplyInstructor from "../pages/Dashboard/Student/apply/ApplyInstructor";
+import NewAppliedInstructor from "../pages/Dashboard/Student/apply/NewAppliedInstructor";
+import EnrolledClasses from "../pages/Dashboard/Student/Enroll/EnrolledClasses";
+import Payment from "../pages/Dashboard/Student/Payment/History/Payment";
+import PaymentHistory from "../pages/Dashboard/Student/Payment/MyPaymentHistory";
+import SelectedClass from "../pages/Dashboard/Student/SelectedClass";
+import StudentCP from "../pages/Dashboard/Student/StudentCP";
+import Home from "../pages/Home/Home";
+import Instructors from "../pages/Instructors/Instructors";
+import Login from "../user/login";
+import Register from "../user/register";
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#ff0000",
-    },
-    secondary: {
-      main: "#00ff00",
-    },
+// === Import mới đã được thêm vào ===
+import Blog from "../pages/Blog/Blog";
+import BlogDetail from "../pages/Blog/BlogDetail";
+import CreatePost from "../pages/Blog/CreatePost";
+import KidsShoes from "../pages/Shoes/KidsShoes";
+import MenShoes from "../pages/Shoes/MenShoes";
+import WomenShoes from "../pages/Shoes/WomenShoes";
+// ===================================
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/instructors",
+        element: <Instructors />,
+      },
+      {
+        path: "/classes",
+        element: <Classes />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/classes/:id",
+        element: <SignleClasses />,
+        loader: async ({ params }) => {
+          const response = await fetch(
+            `https://backend-shoes-79qb.onrender.com/class/${params.id}`
+          );
+          if (!response.ok) {
+            throw new Response("Not Found", { status: 404 });
+          }
+          return response.json();
+        },
+      },
+
+      // === Các route mới cho Blog đã được thêm vào ===
+      {
+        path: "blog",
+        element: <Blog />,
+      },
+      {
+        path: "blog/:id",
+        element: <BlogDetail />,
+      },
+      {
+        path: "blog/create",
+        element: <CreatePost />,
+      },
+      // ===========================================
+
+      // === Các route mới cho Shoes (dropdown) đã được thêm vào ===
+      {
+        path: "shoes/men",
+        element: <MenShoes />,
+      },
+      {
+        path: "shoes/women",
+        element: <WomenShoes />,
+      },
+      {
+        path: "shoes/kids",
+        element: <KidsShoes />,
+      },
+      // ========================================================
+    ],
   },
-});
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      // Dashboard routes here
+      {
+        index: true,
+        element: <Dashboard />,
+      },
 
-const NavBar = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [siteSettings, setSiteSettings] = useState(null); // Để lưu trữ dữ liệu từ API
-  const [loading, setLoading] = useState(true); // Để kiểm soát trạng thái loading
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isHome, setIsHome] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const [isFixed, setIsFixed] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [navBg, setNavBg] = useState("bg-[#15151580]");
-  const { logOut, user } = useContext(AuthContext); // Không gọi trong điều kiện
-  const { currentUser } = useUser(); // Không gọi trong điều kiện
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+      //student routes here
+      {
+        path: "students-cp",
+        element: <StudentCP />,
+      },
+      {
+        path: "enrolled-class",
+        element: <EnrolledClasses />,
+      },
+      {
+        path: "my-selected",
+        element: <SelectedClass />,
+      },
+      {
+        path: "my-payments",
+        element: <PaymentHistory />,
+      },
+      {
+        path: "apply-instructor",
+        element: <ApplyInstructor />,
+      },
 
-  // set title
+      {
+        path: "new-apply-instructor",
+        element: <NewAppliedInstructor />,
+      },
 
-  useEffect(() => {
-    // Lấy dữ liệu từ API khi component được render lần đầu tiên
-    axios
-      .get("https://backend-shoes-79qb.onrender.com/site-settings")
-      .then((response) => {
-        setSiteSettings(response.data); // Cập nhật dữ liệu vào state
-        setLoading(false); // Thay đổi trạng thái loading sau khi có dữ liệu
-      })
-      .catch((error) => {
-        console.error("Có lỗi khi lấy dữ liệu:", error);
-        setLoading(false); // Dù có lỗi cũng phải set loading là false
-      });
-  }, []); // []
-  console.log(siteSettings);
+      {
+        path: "user/payment",
+        element: <Payment />,
+      },
 
-  // if (loading) {
-  //   return <div>Đang tải dữ liệu...</div>;
-  // }
+      // intructor routes here
+      {
+        path: "instructor-cp",
+        element: <InstructorCP />,
+      },
+      {
+        path: "add-class",
+        element: <AddClass />,
+      },
+      {
+        path: "my-classes",
+        element: <MyClasses />,
+      },
+      {
+        path: "my-pedding",
+        element: <PendingCourse />,
+      },
+      {
+        path: "my-approved",
+        element: <MyApproved />,
+      },
+      {
+        path: "my-rejected",
+        element: <RejectedCourse />,
+      },
+      {
+        path: "update/:id",
+        element: <UpdateClass />,
+      },
+      {
+        path: "class/:id", // Route chi tiết lớp học
+        element: <SignleClasses />,
+      },
 
-  // if (!siteSettings) {
-  //   return <div>Lỗi khi lấy dữ liệu.</div>;
-  // }
+      // Admin routes here
+      {
+        path: "admin-home",
+        element: <AdminCP />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUser />,
+      },
+      {
+        path: "manage-class",
+        element: <ManageClass />,
+      },
+      {
+        path: "manage-applications",
+        element: <ManageApplications />,
+      },
+      {
+        path: "update-user/:id",
+        element: <UpdateAccount />,
+        loader: ({ params }) =>
+          fetch(`https://backend-shoes-79qb.onrender.com/users/${params.id}`),
+      },
+      {
+        path: "create-accounts",
+        element: <CreateAccount />,
+      },
+      {
+        path: "seo-setting",
+        element: <SeoSetting />,
+      },
 
-  useEffect(() => {
-    const dartClass = "dark";
-    const root = window.document.documentElement;
-    if (isDarkMode) {
-      root.classList.add(dartClass);
-    } else {
-      root.classList.remove(dartClass);
-    }
-  }, [isDarkMode]);
-
-  useEffect(() => {
-    setIsHome(location.pathname === "/");
-    setIsLogin(location.pathname === "/login");
-    setIsFixed(
-      location.pathname === "/register" || location.pathname === "/login"
-    );
-  }, [location]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollPos = window.pageYOffset;
-      setScrollPosition(currentScrollPos);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // change background colors
-  useEffect(() => {
-    if (scrollPosition > 100) {
-      if (isHome) {
-        setNavBg(
-          "bg-white backdrop-filter backdrop-blur-xl bg-opacity-0 dark:text-white text-black "
-        );
-      } else {
-        setNavBg("bg-white dark:bg-black dark:text-white text-black");
-      }
-    } else {
-      setNavBg(
-        `${
-          isHome || location.pathname === "/"
-            ? "bg-transparent"
-            : "bg-white dark:bg-black"
-        } dark:text-white text-white `
-      );
-    }
-    // console.log("Scroll:", scrollPosition, "NavBg:", navBg);
-  }, [scrollPosition]);
-
-  // logout
-  const handleLogout = (e) => {
-    e.preventDefault();
-    console.log("Logout");
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, LogOut it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        logOut()
-          .then(() => {
-            Swal.fire({
-              title: "LogOut!",
-              text: "Your successfuly has been LogOut.",
-              icon: "success",
-            });
-          })
-          .catch((err) => {
-            Swal.fire("Error!", err.message, "error");
-          });
-      }
-    });
-  };
-
-  return (
-    <motion.nav
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className={`${
-        isHome ? navBg : "bg-white dark:bg-black backdrop-blur-2xl"
-      } ${
-        isFixed ? "static" : "fixed"
-      } top-0 transition-colors duration-500 ease-in-out w-full z-10  `}
-    >
-      <div>
-        <div className="lg:w-[95%] mx-auto sm:px-6 lg:px-6">
-          <div className="px-4 py-4 flex items-center justify-between">
-            {/* logo */}
-            <div
-              onClick={() => navigate("/")}
-              className="flex-shrink-0 cursor-pointer pl-7 md:p-0 flex items-center "
-            >
-              <div>
-                <h1 className="text-2xl inline-flex gap-4 items-center font-bold">
-                  {siteSettings?.nameWebsite || "Study"}{" "}
-                  <img
-                    src={siteSettings?.logoImg || "/yoga-logo.png"}
-                    className="w-8 h-8"
-                    alt={siteSettings?.nameWebsite || "Nike"}
-                  />
-                </h1>
-                <p className="font-bold text-[13px] tracking-[8px]">
-                  {siteSettings?.titleWebsite || "Quick Explore"}{" "}
-                </p>
-              </div>
-            </div>
-            {/*mobile menu icon (reponsive)*/}
-            <div className="md:hidden flex items-center">
-              <button
-                type="button"
-                onClick={toggleMobileMenu}
-                className="text-gray-300 hover:text-white focus:outline-none"
-              >
-                <FaBars className="h-6 w-6 hover:text-primary" />
-              </button>
-            </div>
-            {/* menu items */}
-            <div className="hidden md:block text-black dark:text-white">
-              <div className="flex">
-                <ul className="ml-10 flex items-center space-x-4 pr-4">
-                  {NavLinks.map((link) => (
-                    <li key={link.name}>
-                      <NavLink
-                        to={link.router}
-                        style={{ whiteSpace: "nowrap" }}
-                        className={({ isActive }) =>
-                          `font-bold ${
-                            isActive
-                              ? "text-secondary"
-                              : `${
-                                  navBg.includes("bg-transparent")
-                                    ? "text-white"
-                                    : "text-black dark:text-white"
-                                } `
-                          } hover:text-secondary duration-300`
-                        }
-                      >
-                        {link.name}
-                      </NavLink>
-                    </li>
-                  ))}
-                  {/* //   bar user */}
-                  {user ? null : isLogin ? (
-                    <li>
-                      <NavLink
-                        to="/register"
-                        className={({ isActive }) =>
-                          `font-bold ${
-                            isActive
-                              ? "text-secondary"
-                              : `${
-                                  navBg.includes("bg-transparent")
-                                    ? "text-white"
-                                    : "text-black dark:text-white"
-                                } `
-                          } hover:text-secondary duration-300`
-                        }
-                      >
-                        Register
-                      </NavLink>
-                    </li>
-                  ) : (
-                    <li>
-                      <NavLink
-                        to="/login"
-                        className={({ isActive }) =>
-                          `font-bold ${
-                            isActive
-                              ? "text-secondary"
-                              : `${
-                                  navBg.includes("bg-transparent")
-                                    ? "text-white"
-                                    : "text-black dark:text-white"
-                                } `
-                          } hover:text-secondary duration-300`
-                        }
-                      >
-                        Login
-                      </NavLink>
-                    </li>
-                  )}
-                  {user && (
-                    <li>
-                      <NavLink
-                        to="/dashboard"
-                        className={({ isActive }) =>
-                          `font-bold ${
-                            isActive
-                              ? "text-secondary"
-                              : `${
-                                  navBg.includes("bg-transparent")
-                                    ? "text-white"
-                                    : "text-black dark:text-white"
-                                } `
-                          } hover:text-secondary duration-300`
-                        }
-                      >
-                        Dashboard
-                      </NavLink>
-                    </li>
-                  )}
-                  {user && (
-                    <li>
-                      <img
-                        src={currentUser?.photoUrl}
-                        className="h-[40px] rounded-full w-[40px]"
-                        alt={currentUser?.name || "User Avatar"}
-                      ></img>
-                    </li>
-                  )}
-                  {user && (
-                    <li>
-                      <NavLink
-                        onClick={handleLogout}
-                        className="font-bold px-3 py-2 bg-secondary text-white rounded-xl"
-                      >
-                        Logout
-                      </NavLink>
-                    </li>
-                  )}
-
-                  {/* // color toggle */}
-                  <li>
-                    <ThemeProvider theme={theme}>
-                      <div className="flex flex-col items-center justify-center">
-                        <Switch
-                          checked={isDarkMode}
-                          onChange={() => setIsDarkMode(!isDarkMode)}
-                        />
-                        <h1 className="text-[8px]">Light/Dark</h1>
-                      </div>
-                    </ThemeProvider>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.nav>
-  );
-};
-
-export default NavBar;
+      // router shared
+      {
+        path: "info-profile",
+        element: <ProFile />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePass />,
+      },
+      {
+        path: "/dashboard/update-own-profile/:id",
+        element: <UpdateProfile />,
+        loader: ({ params }) =>
+          fetch(`https://backend-shoes-79qb.onrender.com/users/${params.id}`),
+      },
+    ],
+  },
+]);
