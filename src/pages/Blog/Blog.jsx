@@ -73,7 +73,9 @@ const Blog = () => {
       {/* Thêm khoảng đệm giống file mẫu */}
       <div className="container mx-auto px-4 py-8 mt-20 pt-3">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-secondary">Blog Posts</h1>
+          <h1 className="text-3xl font-bold text-secondary text-center">
+            Blog Posts
+          </h1>
 
           {/* Kiểm tra 'currentUser' (thay vì 'user') */}
           {currentUser && (
