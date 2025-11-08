@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 // === ĐÃ SỬA LỖI TẠI 2 DÒNG NÀY ===
-import DashboardLayout from "../layout/DashboardLayout";
-import MainLayout from "../layout/mainLayout";
+import DashboardLayout from "../../layout/DashboardLayout";
+import MainLayout from "../../layout/mainLayout";
 // =================================
 import Classes from "../pages/Classes/Classes";
 import SignleClasses from "../pages/Classes/SignleClasses";
