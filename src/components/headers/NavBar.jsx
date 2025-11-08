@@ -13,7 +13,7 @@ const NavLinks = [
   { name: "Home", router: "/" },
   { name: "Shoes", router: "/classes" },
   { name: "Saler", router: "/instructors" },
-  // { name: "Blog", router: "/blog" },
+  { name: "Blog", router: "/blog" },
 ];
 
 const theme = createTheme({
