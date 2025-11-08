@@ -71,12 +71,17 @@ const Gallary = () => {
             />
           </div>
           <div>
-            <img
-              src={siteSettings.imgGallary5}
-              alt="Bộ sưu tập giày 5"
-              className="md:h-[350px] rounded-sm"
-              title="Bạn Đã Biết Cách Vệ Sinh Giày Trắng Đúng Cách Chưa? (Mục tiêu: Gây tò mò, giải quyết vấn đề phổ biến)"
-            />
+            <figure>
+              <img
+                src={siteSettings.imgGallary5}
+                alt="Bộ sưu tập giày 5"
+                className="md:h-[350px] rounded-sm"
+                title="Bạn Đã Biết Cách Vệ Sinh Giày Trắng Đúng Cách Chưa? (Mục tiêu: Gây tò mò, giải quyết vấn đề phổ biến)"
+              />
+              <figcaption>
+                Đây là dòng chú thích sẽ hiển thị cho người dùng thấy.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>
