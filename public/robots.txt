@@ -1,4 +1,26 @@
 User-agent: *
 Allow: /
 
+# Block access to sensitive routes
+Disallow: /dashboard/admin/*
+Disallow: /dashboard/instructor/*
+Disallow: /dashboard/student/*
+Disallow: /login
+Disallow: /register
+Disallow: /dashboard/*/profile
+Disallow: /checkout/*
+Disallow: /payment/*
+
+# Allow access to public routes
+Allow: /classes
+Allow: /instructors
+Allow: /gallery
+Allow: /home
+Allow: /assets/
+Allow: /images/
+
+# Crawl delay to prevent server overload
+Crawl-delay: 10
+
+# Sitemap location
 Sitemap: https://frontend-shoes.vercel.app/sitemap.xml
