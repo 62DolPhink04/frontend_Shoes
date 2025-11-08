@@ -128,11 +128,43 @@ const MainLayout = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mt-6 border-t border-gray-300 pt-4 text-sm">
           <p>&copy; 2025 Study.com. All rights reserved.</p>
           <div className="flex space-x-4 mt-2 md:mt-0 text-xl">
-            <FaFacebook className="hover:text-blue-600 cursor-pointer" />
-            <FaYoutube className="hover:text-red-600 cursor-pointer" />
-            <FaInstagram className="hover:text-pink-600 cursor-pointer" />
-            <FaTwitter className="hover:text-sky-500 cursor-pointer" />
-            <FaLinkedin className="hover:text-blue-700 cursor-pointer" />
+            <div className="flex space-x-4 text-2xl">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaFacebook className="hover:text-blue-600 cursor-pointer" />
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaYoutube className="hover:text-red-600 cursor-pointer" />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaInstagram className="hover:text-pink-600 cursor-pointer" />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaTwitter className="hover:text-sky-500 cursor-pointer" />
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FaLinkedin className="hover:text-blue-700 cursor-pointer" />
+              </a>
+            </div>
           </div>
         </div>
       </footer>
