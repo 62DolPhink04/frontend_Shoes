@@ -42,6 +42,7 @@ const Gallary = () => {
             src={siteSettings.imgGallary3}
             alt="Bộ sưu tập giày 1"
             className="md:h-[720px] w-full mx-auto rounded-sm"
+            title="Top 10 Mẫu Giày Sneaker Đáng Mua Nhất 2025 (Mục tiêu: SEO, thu hút người đang tìm mua)"
           />
         </div>
         <div className="gap-4 grid grid-cols-2 items-start">
@@ -50,6 +51,7 @@ const Gallary = () => {
               src={siteSettings.imgGallary1}
               alt="Bộ sưu tập giày 2"
               className="md:h-[350px] rounded-sm"
+              title="Hướng Dẫn Phân Biệt Giày Thật (Auth) và Giày Giả (Fake) Chỉ Trong 5 Phút (Mục tiêu: Giải quyết vấn đề, xây dựng uy tín)"
             />
           </div>
           <div>
@@ -57,6 +59,7 @@ const Gallary = () => {
               src={siteSettings.imgGallary2}
               alt="Bộ sưu tập giày 3"
               className="md:h-[350px] rounded-sm"
+              title="5 Xu Hướng Giày Thể Thao Sẽ Làm Mưa Làm Gió Mùa - Này (Mục tiêu: Bắt trend, thời trang)"
             />
           </div>
           <div>
@@ -64,6 +67,7 @@ const Gallary = () => {
               src={siteSettings.imgGallary4}
               alt="Bộ sưu tập giày 4"
               className="md:h-[350px] rounded-sm"
+              title="Bí Quyết Chọn Giày Chạy Bộ Hoàn Hảo Cho Người Mới Bắt Đầu (Mục tiêu: Hướng dẫn, nhắm vào đối tượng cụ thể)"
             />
           </div>
           <div>
@@ -71,6 +75,7 @@ const Gallary = () => {
               src={siteSettings.imgGallary5}
               alt="Bộ sưu tập giày 5"
               className="md:h-[350px] rounded-sm"
+              title="Bạn Đã Biết Cách Vệ Sinh Giày Trắng Đúng Cách Chưa? (Mục tiêu: Gây tò mò, giải quyết vấn đề phổ biến)"
             />
           </div>
         </div>
