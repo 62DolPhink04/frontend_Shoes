@@ -20,7 +20,7 @@ const Blog = () => {
   useEffect(() => {
     // Sử dụng axiosFetch cho
     axiosFetch
-      .get("/posts") // Endpoint từ backend của bạn là /posts
+      .get("https://backend-shoes-79qb.onrender.com/posts") // Endpoint từ backend của bạn là /posts
       .then((res) => {
         setPosts(res.data);
         setLoading(false);
