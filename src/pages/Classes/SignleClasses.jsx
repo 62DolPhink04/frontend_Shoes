@@ -229,7 +229,7 @@ const SignleClasses = () => {
                         <div className="tab-content" id="tab1">
                           <div>
                             <h3 className="text-2xl mt-8">
-                              Course Description
+                              Product Description
                             </h3>
                             <p
                               className="mt-4 text-lg leading-relaxed whitespace-normal"
