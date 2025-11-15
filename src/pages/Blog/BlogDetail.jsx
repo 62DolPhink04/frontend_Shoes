@@ -17,7 +17,7 @@ const BlogDetail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axiosSecure.get(`/blog/posts/${id}`);
+        const response = await axiosSecure.get(`/posts/${id}`);
         setPost(response.data);
         setComments(response.data.comments || []);
         if (user) {
@@ -39,7 +39,7 @@ const BlogDetail = () => {
     }
 
     try {
-      await axiosSecure.post(`/blog/posts/${id}/like`);
+      await axiosSecure.post(`/posts/${id}/like`);
       setLiked(!liked);
       // Refresh post data
       const response = await axiosSecure.get(`/blog/posts/${id}`);
@@ -59,7 +59,7 @@ const BlogDetail = () => {
     if (!newComment.trim()) return;
 
     try {
-      const response = await axiosSecure.post(`/blog/posts/${id}/comment`, {
+      const response = await axiosSecure.post(`/posts/${id}/comment`, {
         content: newComment,
       });
       setComments(response.data.comments || []);

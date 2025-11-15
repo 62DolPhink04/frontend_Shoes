@@ -33,7 +33,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axiosSecure.get("/blog/posts");
+        const response = await axiosSecure.get("/posts");
         setPosts(response.data);
       } catch (error) {
         console.error(error);
@@ -47,9 +47,9 @@ const Blog = () => {
   // Xử lý khi nhấn "Like" (protected)
   const handleLike = async (postId) => {
     try {
-      await axiosSecure.post(`/blog/posts/${postId}/like`);
+      await axiosSecure.post(`/posts/${postId}/like`);
       // Refresh posts
-      const response = await axiosSecure.get("/blog/posts");
+      const response = await axiosSecure.get("/posts");
       setPosts(response.data);
     } catch (error) {
       console.error(error);
