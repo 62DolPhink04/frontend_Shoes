@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import toast from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
 import useAxiosFetch from "../../hooks/useAxiosFetch";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import useUser from "../../hooks/useUser";
 
 // Icon Heart (Trái tim) bằng SVG - đẹp và mượt hơn emoji ❤️
 const HeartIcon = () => (
@@ -28,62 +27,32 @@ const Blog = () => {
 
   const axiosSecure = useAxiosSecure();
   const axiosFetch = useAxiosFetch();
-  const { currentUser } = useUser();
-  const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Tải danh sách bài viết (public)
   useEffect(() => {
-    axiosFetch
-      .get("https://backend-shoes-79qb.onrender.com/posts")
-      .then((res) => {
-        setPosts(res.data);
+    const fetchPosts = async () => {
+      try {
+        const response = await axiosSecure.get("/blog/posts");
+        setPosts(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi tải bài viết:", error);
-        setLoading(false);
-      });
-  }, [axiosFetch]); // Bỏ 'axiosSecure' nếu không dùng
+      }
+    };
+    fetchPosts();
+  }, [axiosSecure]); // Bỏ 'axiosSecure' nếu không dùng
 
   // Xử lý khi nhấn "Like" (protected)
   const handleLike = async (postId) => {
-    if (!currentUser) {
-      toast.error("Vui lòng đăng nhập để thích bài viết.");
-      navigate("/login");
-      return;
-    }
-
     try {
-      await axiosSecure.post(`/posts/${postId}/like`);
-      // Cập nhật lại state của posts mà không cần gọi API
-      // Giúp tăng tốc độ phản hồi cho người dùng
-      setPosts((currentPosts) =>
-        currentPosts.map((post) => {
-          if (post._id === postId) {
-            const isLiked = post.likes.includes(currentUser._id); // Giả sử currentUser có _id
-            if (isLiked) {
-              // Unlike
-              return {
-                ...post,
-                likes: post.likes.filter((id) => id !== currentUser._id),
-                likesCount: post.likesCount - 1,
-              };
-            } else {
-              // Like
-              return {
-                ...post,
-                likes: [...post.likes, currentUser._id],
-                likesCount: post.likesCount + 1,
-              };
-            }
-          }
-          return post;
-        })
-      );
-      toast.success("Đã cập nhật!");
+      await axiosSecure.post(`/blog/posts/${postId}/like`);
+      // Refresh posts
+      const response = await axiosSecure.get("/blog/posts");
+      setPosts(response.data);
     } catch (error) {
-      console.error("Lỗi khi like bài viết:", error);
-      toast.error("Đã xảy ra lỗi.");
+      console.error(error);
     }
   };
 
@@ -115,7 +84,7 @@ const Blog = () => {
         </div>
 
         {/* Nút "Tạo bài viết" giờ nằm riêng */}
-        {currentUser && (
+        {user && (
           <div className="flex justify-end mb-8">
             <Link
               to="/blog/create"
@@ -137,7 +106,7 @@ const Blog = () => {
               {/* 1. Phần hình ảnh */}
               <div className="overflow-hidden h-52">
                 <img
-                  src={post.image || "https://via.placeholder.com/400x250"}
+                  src={post.image}
                   alt={post.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
@@ -165,7 +134,7 @@ const Blog = () => {
                     >
                       <HeartIcon />
                       <span className="font-medium text-sm">
-                        {post.likesCount}
+                        {post.likes.length}
                       </span>
                     </button>
                     {/* Tên tác giả */}
@@ -187,6 +156,12 @@ const Blog = () => {
             </div>
           ))}
         </div>
+
+        {posts.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">Chưa có bài viết nào.</p>
+          </div>
+        )}
       </div>
     </div>
   );
