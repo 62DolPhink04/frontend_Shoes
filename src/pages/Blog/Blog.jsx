@@ -1,171 +1,156 @@
 import { useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import useAxiosFetch from "../../hooks/useAxiosFetch";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-
-// Icon Heart (Trái tim) bằng SVG - đẹp và mượt hơn emoji ❤️
-const HeartIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-  >
-    <path
-      fillRule="evenodd"
-      d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
-      clipRule="evenodd"
-    />
-  </svg>
-);
 
 const Blog = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  const axiosSecure = useAxiosSecure();
-  const axiosFetch = useAxiosFetch();
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const { user } = useAuth();
+  const [axiosSecure] = useAxiosSecure();
 
-  // Tải danh sách bài viết (public)
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setLoading(true);
         const response = await axiosSecure.get(
           "https://backend-shoes-79qb.onrender.com/posts"
         );
-        setPosts(response.data);
-      } catch (error) {
-        console.error(error);
+
+        // Đảm bảo posts luôn là array
+        if (Array.isArray(response.data)) {
+          setPosts(response.data);
+        } else if (response.data?.posts && Array.isArray(response.data.posts)) {
+          setPosts(response.data.posts);
+        } else {
+          setPosts([]);
+        }
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+        setError("Failed to load posts");
+        setPosts([]);
       } finally {
         setLoading(false);
       }
     };
-    fetchPosts();
-  }, [axiosSecure]); // Bỏ 'axiosSecure' nếu không dùng
 
-  // Xử lý khi nhấn "Like" (protected)
+    fetchPosts();
+  }, [axiosSecure]);
+
   const handleLike = async (postId) => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
     try {
       await axiosSecure.post(
         `https://backend-shoes-79qb.onrender.com/posts/${postId}/like`
       );
       // Refresh posts
-      const response = await axiosSecure.get(
-        "https://backend-shoes-79qb.onrender.com/posts"
-      );
-      setPosts(response.data);
+      const response = await axiosSecure.get("/blog/posts");
+      if (Array.isArray(response.data)) {
+        setPosts(response.data);
+      } else if (response.data?.posts) {
+        setPosts(response.data.posts);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error liking post:", error);
     }
   };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen dark:text-white">
-        Đang tải bài viết...
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-xl text-red-600">{error}</div>
       </div>
     );
   }
 
   return (
-    <div>
-      <Helmet>
-        <title>Blog - Tin Tức & Cập Nhật | Nike Store Việt Nam</title>
-        <meta
-          name="description"
-          content="Đọc các bài viết, tin tức và cập nhật mới nhất từ Nike Store Việt Nam. Khám phá các xu hướng và câu chuyện."
-        />
-      </Helmet>
-
-      <div className="container mx-auto px-4 py-8 mt-20 pt-3">
-        {/* === HEADER SECTION ĐÃ SỬA LẠI BỐ CỤC === */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-secondary mb-3">Blog Posts</h1>
-          <p className="text-lg text-gray-500 dark:text-gray-400">
-            Khám phá các xu hướng, hướng dẫn và câu chuyện mới nhất.
-          </p>
-        </div>
-
-        {/* Nút "Tạo bài viết" giờ nằm riêng */}
-        {user && (
-          <div className="flex justify-end mb-8">
+    <div className="bg-gray-50 py-12">
+      <div className="container mx-auto px-4">
+        <div className="flex justify-between items-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-800">Blog Posts</h1>
+          {user && (
             <Link
               to="/blog/create"
-              className="px-5 py-3 text-white bg-secondary duration-300 rounded-lg hover:bg-red-700 font-semibold shadow-md"
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition font-semibold"
             >
-              Tạo bài viết mới
+              Create New Post
             </Link>
-          </div>
-        )}
-        {/* === KẾT THÚC HEADER SECTION === */}
+          )}
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            // === CARD BÀI VIẾT ĐÃ SỬA LẠI THẨM MỸ ===
-            <div
-              key={post._id}
-              className="group bg-white dark:bg-slate-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-200 dark:border-gray-700 flex flex-col"
-            >
-              {/* 1. Phần hình ảnh */}
-              <div className="overflow-hidden h-52">
+        {posts && posts.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {posts.map((post) => (
+              <div
+                key={post._id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition"
+              >
                 <img
                   src={post.image}
                   alt={post.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-48 object-cover"
                 />
-              </div>
+                <div className="p-6">
+                  <h2 className="text-xl font-bold text-gray-800 mb-3 line-clamp-2">
+                    {post.title}
+                  </h2>
+                  <p className="text-gray-600 mb-4 line-clamp-3">
+                    {post.content}
+                  </p>
 
-              {/* 2. Phần nội dung (flex-grow để đẩy footer xuống) */}
-              <div className="p-5 flex-grow flex flex-col">
-                <h2 className="text-xl font-semibold mb-2 dark:text-white text-gray-900 truncate">
-                  {post.title}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm h-16">
-                  {post.content
-                    ? `${post.content.substring(0, 120)}...`
-                    : "Không có nội dung."}
-                </p>
-
-                {/* Phần này sẽ được đẩy xuống cuối card */}
-                <div className="mt-auto">
-                  {/* Đường gạch ngang thẩm mỹ */}
-                  <div className="border-t border-gray-200 dark:border-gray-700 pt-4 mb-4 flex items-center justify-between">
-                    {/* Nút like */}
-                    <button
-                      onClick={() => handleLike(post._id)}
-                      className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-secondary dark:hover:text-secondary transition-colors duration-200"
-                    >
-                      <HeartIcon />
-                      <span className="font-medium text-sm">
-                        {post.likes.length}
-                      </span>
-                    </button>
-                    {/* Tên tác giả */}
-                    <span className="text-sm text-gray-500 dark:text-gray-400 italic">
-                      bởi {post.author?.name || "Admin"}
-                    </span>
+                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4 pb-4 border-b">
+                    <span>By {post.author?.name || "Anonymous"}</span>
+                    <span>{new Date(post.createdAt).toLocaleDateString()}</span>
                   </div>
 
-                  {/* Nút Đọc thêm (full-width) */}
+                  <div className="flex items-center gap-4 mb-4">
+                    <button
+                      onClick={() => handleLike(post._id)}
+                      className="flex items-center gap-1 text-red-500 hover:text-red-600 font-semibold"
+                    >
+                      ❤️ {post.likes?.length || 0}
+                    </button>
+                    <div className="flex items-center gap-1 text-blue-500 font-semibold">
+                      💬 {post.comments?.length || 0}
+                    </div>
+                  </div>
+
                   <Link
                     to={`/blog/${post._id}`}
-                    className="block w-full text-center px-4 py-2 text-white bg-secondary duration-300 rounded-md hover:bg-red-700 font-semibold"
+                    className="inline-block bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition font-semibold"
                   >
-                    Đọc thêm
+                    View More →
                   </Link>
                 </div>
               </div>
-              {/* === KẾT THÚC CARD === */}
-            </div>
-          ))}
-        </div>
-
-        {posts.length === 0 && (
+            ))}
+          </div>
+        ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">Chưa có bài viết nào.</p>
+            <p className="text-gray-600 text-lg">No posts found yet.</p>
+            {user && (
+              <Link
+                to="/blog/create"
+                className="inline-block mt-4 bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600"
+              >
+                Create the first post
+              </Link>
+            )}
           </div>
         )}
       </div>

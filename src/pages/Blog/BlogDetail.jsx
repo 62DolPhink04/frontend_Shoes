@@ -13,24 +13,37 @@ const BlogDetail = () => {
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axiosSecure.get(`/posts/${id}`);
-        setPost(response.data);
-        setComments(response.data.comments || []);
-        if (user) {
-          setLiked(response.data.likes.includes(user._id));
+        setLoading(true);
+        const response = await axiosSecure.get(
+          `https://backend-shoes-79qb.onrender.com/posts/${id}`
+        );
+        const postData = response.data;
+
+        setPost(postData);
+        setComments(Array.isArray(postData.comments) ? postData.comments : []);
+
+        if (user && Array.isArray(postData.likes)) {
+          setLiked(postData.likes.includes(user._id));
         }
-      } catch (error) {
-        console.error("Error fetching post:", error);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching post:", err);
+        setError("Failed to load post");
+        setPost(null);
       } finally {
         setLoading(false);
       }
     };
-    fetchPost();
-  }, [id, user]);
+
+    if (id) {
+      fetchPost();
+    }
+  }, [id, user, axiosSecure]);
 
   const handleLike = async () => {
     if (!user) {
@@ -39,9 +52,11 @@ const BlogDetail = () => {
     }
 
     try {
-      await axiosSecure.post(`/posts/${id}/like`);
+      await axiosSecure.post(
+        `https://backend-shoes-79qb.onrender.com/posts/${id}/like`
+      );
       setLiked(!liked);
-      // Refresh post data
+
       const response = await axiosSecure.get(`/blog/posts/${id}`);
       setPost(response.data);
     } catch (error) {
@@ -51,6 +66,7 @@ const BlogDetail = () => {
 
   const handleComment = async (e) => {
     e.preventDefault();
+
     if (!user) {
       navigate("/login");
       return;
@@ -59,10 +75,16 @@ const BlogDetail = () => {
     if (!newComment.trim()) return;
 
     try {
-      const response = await axiosSecure.post(`/posts/${id}/comment`, {
-        content: newComment,
-      });
-      setComments(response.data.comments || []);
+      const response = await axiosSecure.post(
+        `https://backend-shoes-79qb.onrender.com/posts/${id}/comment`,
+        {
+          content: newComment,
+        }
+      );
+
+      setComments(
+        Array.isArray(response.data.comments) ? response.data.comments : []
+      );
       setNewComment("");
     } catch (error) {
       console.error("Error commenting:", error);
@@ -71,38 +93,51 @@ const BlogDetail = () => {
 
   const handleShare = async (platform) => {
     const url = window.location.href;
-    const title = post.title;
+    const title = post?.title || "Check out this blog post";
 
     switch (platform) {
       case "facebook":
         window.open(
-          `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            url
+          )}`,
           "_blank"
         );
         break;
       case "twitter":
         window.open(
-          `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+          `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+            url
+          )}&text=${encodeURIComponent(title)}`,
           "_blank"
         );
         break;
       case "whatsapp":
-        window.open(`https://wa.me/?text=${title} ${url}`, "_blank");
-        break;
-      case "linkedin":
         window.open(
-          `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+          `https://wa.me/?text=${encodeURIComponent(title + " " + url)}`,
           "_blank"
         );
         break;
-      default:
+      case "linkedin":
+        window.open(
+          `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+            url
+          )}`,
+          "_blank"
+        );
+        break;
+      case "copy":
         navigator.clipboard.writeText(url);
         alert("Link copied to clipboard!");
+        break;
+      default:
+        break;
     }
 
-    // Update share count
     try {
-      await axiosSecure.post(`/blog/posts/${id}/share`);
+      await axiosSecure.post(
+        `https://backend-shoes-79qb.onrender.com/posts/${id}/share`
+      );
     } catch (error) {
       console.error("Error recording share:", error);
     }
@@ -116,10 +151,20 @@ const BlogDetail = () => {
     );
   }
 
-  if (!post) {
+  if (error || !post) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="text-xl text-gray-600">Post not found</div>
+        <div className="text-center">
+          <div className="text-xl text-red-600 mb-4">
+            {error || "Post not found"}
+          </div>
+          <button
+            onClick={() => navigate("/blog")}
+            className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600"
+          >
+            Back to Blog
+          </button>
+        </div>
       </div>
     );
   }
@@ -128,7 +173,6 @@ const BlogDetail = () => {
     <div className="bg-gray-50 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Post Header */}
           <article className="bg-white rounded-lg shadow-lg overflow-hidden">
             <img
               src={post.image}
@@ -141,16 +185,15 @@ const BlogDetail = () => {
                 {post.title}
               </h1>
 
-              {/* Author Info */}
               <div className="flex items-center gap-4 mb-6 pb-6 border-b">
                 <img
                   src={post.author?.avatar || "https://via.placeholder.com/50"}
-                  alt={post.author?.name}
+                  alt={post.author?.name || "Author"}
                   className="w-12 h-12 rounded-full"
                 />
                 <div>
                   <p className="font-semibold text-gray-800">
-                    {post.author?.name}
+                    {post.author?.name || "Anonymous"}
                   </p>
                   <p className="text-sm text-gray-500">
                     {new Date(post.createdAt).toLocaleDateString()}
@@ -158,26 +201,25 @@ const BlogDetail = () => {
                 </div>
               </div>
 
-              {/* Post Content */}
               <div className="prose prose-lg max-w-none mb-8 text-gray-700 leading-relaxed">
                 {post.content}
               </div>
 
-              {/* Tags */}
-              {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {post.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+              {post.tags &&
+                Array.isArray(post.tags) &&
+                post.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-8">
+                    {post.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-              {/* Social Actions */}
               <div className="flex items-center gap-8 py-6 border-t border-b">
                 <button
                   onClick={handleLike}
@@ -188,7 +230,9 @@ const BlogDetail = () => {
                   }`}
                 >
                   <span className="text-2xl">{liked ? "❤️" : "🤍"}</span>
-                  <span>{post.likes.length} Likes</span>
+                  <span>
+                    {Array.isArray(post.likes) ? post.likes.length : 0} Likes
+                  </span>
                 </button>
 
                 <div className="flex items-center gap-2 font-semibold text-gray-600">
@@ -202,56 +246,53 @@ const BlogDetail = () => {
                 </div>
               </div>
 
-              {/* Share Buttons */}
               <div className="py-6 border-b">
                 <p className="text-gray-600 font-semibold mb-3">Share:</p>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <button
                     onClick={() => handleShare("facebook")}
                     className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
                   >
-                    <span>f</span> Facebook
+                    Facebook
                   </button>
                   <button
                     onClick={() => handleShare("twitter")}
                     className="flex items-center gap-2 bg-blue-400 text-white px-4 py-2 rounded hover:bg-blue-500 transition"
                   >
-                    <span>𝕏</span> Twitter
+                    Twitter
                   </button>
                   <button
                     onClick={() => handleShare("whatsapp")}
                     className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
                   >
-                    <span>💬</span> WhatsApp
+                    WhatsApp
                   </button>
                   <button
                     onClick={() => handleShare("linkedin")}
                     className="flex items-center gap-2 bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition"
                   >
-                    <span>in</span> LinkedIn
+                    LinkedIn
                   </button>
                   <button
                     onClick={() => handleShare("copy")}
                     className="flex items-center gap-2 bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition"
                   >
-                    <span>🔗</span> Copy Link
+                    Copy Link
                   </button>
                 </div>
               </div>
 
-              {/* Comments Section */}
               <div className="mt-12">
                 <h2 className="text-2xl font-bold mb-6 text-gray-800">
                   Comments ({comments.length})
                 </h2>
 
-                {/* Comment Form */}
                 {user ? (
                   <form onSubmit={handleComment} className="mb-8">
                     <div className="flex gap-4">
                       <img
                         src={user.avatar || "https://via.placeholder.com/40"}
-                        alt={user.name}
+                        alt={user.name || "User"}
                         className="w-10 h-10 rounded-full"
                       />
                       <div className="flex-1">
@@ -285,7 +326,6 @@ const BlogDetail = () => {
                   </div>
                 )}
 
-                {/* Comments List */}
                 <div className="space-y-6">
                   {comments.length > 0 ? (
                     comments.map((comment, index) => (
@@ -299,7 +339,7 @@ const BlogDetail = () => {
                               comment.user?.avatar ||
                               "https://via.placeholder.com/40"
                             }
-                            alt={comment.user?.name}
+                            alt={comment.user?.name || "User"}
                             className="w-10 h-10 rounded-full"
                           />
                           <div>
