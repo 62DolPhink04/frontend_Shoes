@@ -33,7 +33,9 @@ const Blog = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axiosSecure.get("/posts");
+        const response = await axiosSecure.get(
+          "https://backend-shoes-79qb.onrender.com/posts"
+        );
         setPosts(response.data);
       } catch (error) {
         console.error(error);
@@ -47,9 +49,13 @@ const Blog = () => {
   // Xử lý khi nhấn "Like" (protected)
   const handleLike = async (postId) => {
     try {
-      await axiosSecure.post(`/posts/${postId}/like`);
+      await axiosSecure.post(
+        `https://backend-shoes-79qb.onrender.com/posts/${postId}/like`
+      );
       // Refresh posts
-      const response = await axiosSecure.get("/posts");
+      const response = await axiosSecure.get(
+        "https://backend-shoes-79qb.onrender.com/posts"
+      );
       setPosts(response.data);
     } catch (error) {
       console.error(error);

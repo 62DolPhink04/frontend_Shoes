@@ -17,10 +17,13 @@ const CreatePost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axiosSecure.post("/blog/posts", {
-        ...formData,
-        tags: formData.tags.split(",").map((tag) => tag.trim()),
-      });
+      await axiosSecure.post(
+        "https://backend-shoes-79qb.onrender.com/posts/posts",
+        {
+          ...formData,
+          tags: formData.tags.split(",").map((tag) => tag.trim()),
+        }
+      );
       navigate("/blog");
     } catch (error) {
       console.error("Error creating post:", error);
