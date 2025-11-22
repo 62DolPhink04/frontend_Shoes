@@ -151,7 +151,7 @@ const Blog = () => {
 
                   {/* Nút Đọc thêm (full-width) */}
                   <Link
-                    to={`/blog/${post._id}`}
+                    to={`/blog/${post.slug}`}
                     className="block w-full text-center px-4 py-2 text-white bg-secondary duration-300 rounded-md hover:bg-red-700 font-semibold"
                   >
                     Đọc thêm

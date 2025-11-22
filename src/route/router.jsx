@@ -70,13 +70,14 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register />,
       },
+      // ✅ KHẮC PHỤC LỖI SEO URL CHO CLASSES: Dùng :slug và loader đã sửa
       {
-        path: "/classes/:id",
+        path: "/classes/:slug",
         element: <SignleClasses />,
         loader: async ({ params }) => {
           const response = await fetch(
-            `https://backend-shoes-79qb.onrender.com/class/${params.id}`
-          );
+            `https://backend-shoes-79qb.onrender.com/class/${params.slug}`
+          ); // ✅ Dùng params.slug
           if (!response.ok) {
             throw new Response("Not Found", { status: 404 });
           }
@@ -89,9 +90,11 @@ export const router = createBrowserRouter([
         path: "blog",
         element: <Blog />,
       },
+      // ✅ KHẮC PHỤC LỖI SEO URL CHO BLOG: Dùng :slug
       {
-        path: "blog/:id",
+        path: "blog/:slug",
         element: <BlogDetail />,
+        // Không cần loader vì BlogDetail dùng useEffect và axiosSecure
       },
       {
         path: "blog/create",
@@ -204,8 +207,9 @@ export const router = createBrowserRouter([
         path: "update/:id",
         element: <UpdateClass />,
       },
+      // ✅ KHẮC PHỤC: Đồng bộ route chi tiết lớp học trong Dashboard
       {
-        path: "class/:id", // Route chi tiết lớp học
+        path: "class/:slug",
         element: <SignleClasses />,
       },
 

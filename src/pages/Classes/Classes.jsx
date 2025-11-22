@@ -226,7 +226,7 @@ const Classes = () => {
                     ${cls.price}
                   </span>
                 </div>
-                <Link to={`/classes/${cls._id}`}>
+                <Link to={`/classes/${cls.slug}`}>
                   <button className="px-4 py-2 my-4 w-full mx-auto text-white disabled:bg-red-300 bg-secondary duration-300 hover:bg-red-700">
                     View
                   </button>
