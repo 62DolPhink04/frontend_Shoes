@@ -50,34 +50,20 @@ export const router = createBrowserRouter([
     path: "/",
     element: <MainLayout />,
     children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/instructors",
-        element: <Instructors />,
-      },
-      {
-        path: "/classes",
-        element: <Classes />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      // ✅ KHẮC PHỤC LỖI SEO URL CHO CLASSES: Dùng :slug và loader đã sửa
+      { path: "/", element: <Home /> },
+      { path: "/instructors", element: <Instructors /> },
+      { path: "/classes", element: <Classes /> },
+      { path: "/login", element: <Login /> },
+      { path: "/register", element: <Register /> },
+
+      // ✅ Route Public: Đã đúng
       {
         path: "/classes/:slug",
         element: <SignleClasses />,
         loader: async ({ params }) => {
           const response = await fetch(
             `https://backend-shoes-79qb.onrender.com/class/${params.slug}`
-          ); // ✅ Dùng params.slug
+          );
           if (!response.ok) {
             throw new Response("Not Found", { status: 404 });
           }
@@ -85,54 +71,17 @@ export const router = createBrowserRouter([
         },
       },
 
-      // === Các route mới cho Blog đã được thêm vào ===
-      {
-        path: "blog",
-        element: <Blog />,
-      },
-      // ✅ KHẮC PHỤC LỖI SEO URL CHO BLOG: Dùng :slug
-      {
-        path: "blog/:slug",
-        element: <BlogDetail />,
-        // Không cần loader vì BlogDetail dùng useEffect và axiosSecure
-      },
-      {
-        path: "blog/create",
-        element: <CreatePost />,
-      },
-      // ===========================================
+      { path: "blog", element: <Blog /> },
+      { path: "blog/:slug", element: <BlogDetail /> },
+      { path: "blog/create", element: <CreatePost /> },
 
-      // === Các route mới cho Shoes (dropdown) đã được thêm vào ===
-      {
-        path: "shoes/men",
-        element: <MenShoes />,
-      },
-      {
-        path: "shoes/women",
-        element: <WomenShoes />,
-      },
-      {
-        path: "shoes/kids",
-        element: <KidsShoes />,
-      },
-
-      {
-        path: "contact",
-        element: <Contact />,
-      },
-      {
-        path: "faq",
-        element: <FAQ />,
-      },
-      {
-        path: "policy",
-        element: <Policy />,
-      },
-      {
-        path: "about",
-        element: <About />,
-      },
-      // ========================================================
+      { path: "shoes/men", element: <MenShoes /> },
+      { path: "shoes/women", element: <WomenShoes /> },
+      { path: "shoes/kids", element: <KidsShoes /> },
+      { path: "contact", element: <Contact /> },
+      { path: "faq", element: <FAQ /> },
+      { path: "policy", element: <Policy /> },
+      { path: "about", element: <About /> },
     ],
   },
 
@@ -140,120 +89,51 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
-      // Dashboard routes here
-      {
-        index: true,
-        element: <Dashboard />,
-      },
+      { index: true, element: <Dashboard /> },
+      { path: "students-cp", element: <StudentCP /> },
+      { path: "enrolled-class", element: <EnrolledClasses /> },
+      { path: "my-selected", element: <SelectedClass /> },
+      { path: "my-payments", element: <PaymentHistory /> },
+      { path: "apply-instructor", element: <ApplyInstructor /> },
+      { path: "new-apply-instructor", element: <NewAppliedInstructor /> },
+      { path: "user/payment", element: <Payment /> },
+      { path: "instructor-cp", element: <InstructorCP /> },
+      { path: "add-class", element: <AddClass /> },
+      { path: "my-classes", element: <MyClasses /> },
+      { path: "my-pedding", element: <PendingCourse /> },
+      { path: "my-approved", element: <MyApproved /> },
+      { path: "my-rejected", element: <RejectedCourse /> },
+      { path: "update/:id", element: <UpdateClass /> },
 
-      //student routes here
-      {
-        path: "students-cp",
-        element: <StudentCP />,
-      },
-      {
-        path: "enrolled-class",
-        element: <EnrolledClasses />,
-      },
-      {
-        path: "my-selected",
-        element: <SelectedClass />,
-      },
-      {
-        path: "my-payments",
-        element: <PaymentHistory />,
-      },
-      {
-        path: "apply-instructor",
-        element: <ApplyInstructor />,
-      },
-
-      {
-        path: "new-apply-instructor",
-        element: <NewAppliedInstructor />,
-      },
-
-      {
-        path: "user/payment",
-        element: <Payment />,
-      },
-
-      // intructor routes here
-      {
-        path: "instructor-cp",
-        element: <InstructorCP />,
-      },
-      {
-        path: "add-class",
-        element: <AddClass />,
-      },
-      {
-        path: "my-classes",
-        element: <MyClasses />,
-      },
-      {
-        path: "my-pedding",
-        element: <PendingCourse />,
-      },
-      {
-        path: "my-approved",
-        element: <MyApproved />,
-      },
-      {
-        path: "my-rejected",
-        element: <RejectedCourse />,
-      },
-      {
-        path: "update/:id",
-        element: <UpdateClass />,
-      },
-      // ✅ KHẮC PHỤC: Đồng bộ route chi tiết lớp học trong Dashboard
+      // ✅ SỬA LỖI CRASH: Thêm Loader cho route Dashboard Class
       {
         path: "class/:slug",
         element: <SignleClasses />,
+        loader: async ({ params }) => {
+          const response = await fetch(
+            `https://backend-shoes-79qb.onrender.com/class/${params.slug}`
+          );
+          if (!response.ok) {
+            throw new Response("Not Found", { status: 404 });
+          }
+          return response.json();
+        },
       },
 
-      // Admin routes here
-      {
-        path: "admin-home",
-        element: <AdminCP />,
-      },
-      {
-        path: "manage-users",
-        element: <ManageUser />,
-      },
-      {
-        path: "manage-class",
-        element: <ManageClass />,
-      },
-      {
-        path: "manage-applications",
-        element: <ManageApplications />,
-      },
+      { path: "admin-home", element: <AdminCP /> },
+      { path: "manage-users", element: <ManageUser /> },
+      { path: "manage-class", element: <ManageClass /> },
+      { path: "manage-applications", element: <ManageApplications /> },
       {
         path: "update-user/:id",
         element: <UpdateAccount />,
         loader: ({ params }) =>
           fetch(`https://backend-shoes-79qb.onrender.com/users/${params.id}`),
       },
-      {
-        path: "create-accounts",
-        element: <CreateAccount />,
-      },
-      {
-        path: "seo-setting",
-        element: <SeoSetting />,
-      },
-
-      // router shared
-      {
-        path: "info-profile",
-        element: <ProFile />,
-      },
-      {
-        path: "change-password",
-        element: <ChangePass />,
-      },
+      { path: "create-accounts", element: <CreateAccount /> },
+      { path: "seo-setting", element: <SeoSetting /> },
+      { path: "info-profile", element: <ProFile /> },
+      { path: "change-password", element: <ChangePass /> },
       {
         path: "/dashboard/update-own-profile/:id",
         element: <UpdateProfile />,
